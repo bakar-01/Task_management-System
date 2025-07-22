@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Manager</title>
+    <style>
+      body {
+        font-family: Arial;
+        max-width: 600px;
+        margin: auto;
+      }
+      .completed {
+        text-decoration: line-through;
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task Manager</h1>
+
+    <form method="POST" action="/add/">
+      {% csrf_token %}
+      <input type="text" name="title" placeholder="Task title..." required />
+      <select name="priority">
+        <option value="Low">Low</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="High">High</option>
+      </select>
+      <input type="date" name="deadline" />
+      <button type="submit">Add</button>
+    </form>
+
+    <ul>
+      {% for task in tasks %}
+        <li{% if task.completed %} class="completed"{% endif %}>
+          <strong>{{ task.title }}</strong>
+          | Deadline: {{ task.deadline|default:"No deadline" }}
+          | Priority: {{ task.priority }}
+          <a href="/complete/{{ task.id }}/">✅</a>
+          <a href="/delete/{{ task.id }}/">❌</a>
+        </li>
+      {% empty %}
+        <li>No tasks yet!</li>
+      {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}</p>
+      <form method="POST" action="/accounts/logout/" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    {% else %}
+      <p>
+        <a href="/accounts/login/">Login</a> | <a href="/register/">Register</a>
+      </p>
+    {% endif %}
+  </body>
+</html>
