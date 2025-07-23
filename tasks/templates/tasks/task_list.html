@@ -29,12 +29,23 @@
       <button type="submit">Add</button>
     </form>
 
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
     <ul>
       {% for task in tasks %}
         <li{% if task.completed %} class="completed"{% endif %}>
           <strong>{{ task.title }}</strong>
+          {% if task.description %}<br>{{ task.description }}{% endif %}
+          {% if task.category %}<br><em>Category: {{ task.category }}</em>{% endif %}
           | Deadline: {{ task.deadline|default:"No deadline" }}
           | Priority: {{ task.priority }}
+          <a href="/edit/{{ task.id }}/">✏️</a>
           <a href="/complete/{{ task.id }}/">✅</a>
           <a href="/delete/{{ task.id }}/">❌</a>
         </li>
@@ -42,6 +53,24 @@
         <li>No tasks yet!</li>
       {% endfor %}
     </ul>
+
+    <div class="pagination">
+      <span class="step-links">
+        {% if tasks.has_previous %}
+          <a href="?page=1">First</a>
+          <a href="?page={{ tasks.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}
+        </span>
+
+        {% if tasks.has_next %}
+          <a href="?page={{ tasks.next_page_number }}">Next</a>
+          <a href="?page={{ tasks.paginator.num_pages }}">Last</a>
+        {% endif %}
+      </span>
+    </div>
 
     {% if user.is_authenticated %}
       <p>Welcome, {{ user.username }}</p>

@@ -10,6 +10,8 @@ class Task(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)   # Owner of the task
     title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)  # New field for task details
+    category = models.CharField(max_length=100, blank=True)    # New field for category/tag
     completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='Medium')
     deadline = models.DateField(null=True, blank=True)
