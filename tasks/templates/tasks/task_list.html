@@ -27,6 +27,14 @@
       h4 {
         color: #333;
       }
+      button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -102,6 +110,9 @@
 
     {% if user.is_authenticated %}
     <p>Welcome, <strong>{{ user.username }}</strong></p>
+    <a href="{% url 'profile_update' %}">
+      <button type="button" style="margin-left: 10px;">Update Profile</button>
+    </a>
     <form method="POST" action="/accounts/logout/" style="display: inline">
       {% csrf_token %}
       <button type="submit"><strong>Logout</strong></button>
