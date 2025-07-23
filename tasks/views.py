@@ -1,8 +1,7 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskForm, ProfileUpdateForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
@@ -10,7 +9,14 @@ from django.contrib.auth import login
 
 @login_required
 def edit_task(request, task_id):
-    task = Task.objects.get(id=task_id, user=request.user)
+    task = Task.objects.get(id=task_id)
+    # Prevent editing if assigned to user by admin
+    if not request.user.is_superuser and task.user != request.user:
+        messages.error(request, 'You do not have permission to edit this task.')
+        return redirect('task_list')
+    if not request.user.is_superuser and task.user == request.user and task.user_created_by_admin():
+        messages.error(request, 'You cannot edit tasks assigned to you by the admin.')
+        return redirect('task_list')
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
@@ -48,7 +54,12 @@ def add_task(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.user = request.user
+            # If admin is assigning task to another user, set assigned_by to admin
+            if request.user.is_superuser and 'user' in form.cleaned_data and form.cleaned_data['user'] != request.user:
+                task.assigned_by = request.user
+            else:
+                task.assigned_by = None
+            task.user = form.cleaned_data.get('user', request.user)
             task.save()
             messages.success(request, 'Task added successfully!')
             return redirect('task_list')
@@ -67,6 +78,26 @@ def complete_task(request, task_id):
 
 @login_required
 def delete_task(request, task_id):
-    task = Task.objects.get(id=task_id, user=request.user)
-    task.delete()
-    return redirect('task_list')
+    task = Task.objects.get(id=task_id)
+    # Prevent deleting if assigned to user by admin
+    if not request.user.is_superuser and task.user != request.user:
+        messages.error(request, 'You do not have permission to delete this task.')
+        return redirect('task_list')
+    if not request.user.is_superuser and task.user == request.user and task.user_created_by_admin():
+        messages.error(request, 'You cannot delete tasks assigned to you by the admin.')
+        return redirect('task_list')
+
+@login_required
+def profile_update(request):
+    user = request.user
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('task_list')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = ProfileUpdateForm(instance=user)
+    return render(request, 'tasks/profile_update.html', {'form': form})

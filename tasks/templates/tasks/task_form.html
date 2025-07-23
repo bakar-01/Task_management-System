@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Edit Task</title>
     <style>
-      body { font-family: Arial; max-width: 600px; margin: auto; }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background-color: rgb(82, 95, 95);
+        font-family: Arial;
+        max-width: 600px;
+        margin: auto;
+      }
+      fieldset {
+        background-color: #b3ca6e;
+        border: 1px solid #ccc;
+        padding: 30px;
+        border-radius: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Task</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-    <a href="/">Back to Task List</a>
-</body>
+    <fieldset>
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <br />
+        <button type="submit"><strong>Save</strong></button>
+      </form>
+      <br />
+      <a href="/"><strong>Back to Task List</strong></a>
+    </fieldset>
+  </body>
 </html>

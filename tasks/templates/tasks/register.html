@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head><title>Register</title></head>
-<body>
-    <h1>Register</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="/accounts/login/">Login</a></p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e5cccc;
+        margin: 0;
+        padding: 20px;
+      }
+      fieldset {
+        background-color: #619cdfe7;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      legend {
+        font-size: 1.5em;
+      }
+      form {
+        display: inline-block;
+        flex-direction: column;
+      }
+      button {
+        margin-top: 15px;
+      }
+      #register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: rgb(113, 152, 152);
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <legend><h1>Register</h1></legend>
+      <fieldset id="register-form">
+        <form method="POST">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit"><strong>Register</strong></button>
+        </form>
+      </fieldset>
+      <p>
+        Already have an account?
+        <a href="/accounts/login/"><strong>Login</strong></a>
+      </p>
+    </fieldset>
+  </body>
 </html>
