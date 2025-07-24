@@ -3,29 +3,42 @@
   <head>
     <title>Task Manager</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
       body {
         font-family: Arial;
         max-width: 600px;
         margin: auto;
         background-color: rgb(164, 162, 162);
+        color: #333;
+        padding: 20px;
+        line-height: 1.6;
+        text-align: left;
+
       }
       .completed {
         text-decoration: line-through;
         color: gray;
+
       }
       fieldset {
         background-color: #88d4f789;
         border: 1px solid #ccc;
         padding: 20px;
         border-radius: 5px;
+        margin-bottom: 20px;
+
       }
       #task-list {
         background-color: #9fbfbf;
         padding: 10px;
         border-radius: 5px;
+
       }
       h4 {
         color: #333;
+
       }
       button {
         background-color: #4CAF50;
@@ -34,6 +47,19 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+
+      }
+      button:hover {
+        background-color: #b84604;
+
+      }
+      a {
+        color: #5c17d3;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>

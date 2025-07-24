@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Not Found</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            margin: 40px;
+            text-align: center;
+        }
+        .container {
+            border: 1px solid #f5c6cb;
+            background-color: #f8d7da;
+            padding: 30px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        a {
+            color: #721c24;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Not Found (404)</h1>
+        <p>The task you are trying to access does not exist or you do not have permission to view it.</p>
+        <p><a href="{% url 'task_list' %}">Return to Task List</a></p>
+    </div>
+</body>
+</html>
