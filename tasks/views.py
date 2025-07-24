@@ -69,9 +69,11 @@ def add_task(request):
         form = TaskForm()
     return render(request, 'tasks/task_form.html', {'form': form})
 
+from django.shortcuts import get_object_or_404
+
 @login_required
 def complete_task(request, task_id):
-    task = Task.objects.get(id=task_id, user=request.user)
+    task = get_object_or_404(Task, id=task_id, user=request.user)
     task.completed = not task.completed
     task.save()
     return redirect('task_list')
