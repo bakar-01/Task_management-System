@@ -28,5 +28,6 @@ class TaskAdmin(admin.ModelAdmin):
         css = {
             'all': ('tasks/css/admin_custom.css',)
         }
+        js = ('tasks/js/admin_inline_test.js',)
 
 admin.site.register(Task, TaskAdmin)
