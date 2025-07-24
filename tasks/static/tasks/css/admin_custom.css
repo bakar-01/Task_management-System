@@ -1,0 +1,39 @@
+/* Custom admin styles for Task model */
+
+fieldset.module {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+fieldset.module h2 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.model-task .field-title {
+    font-weight: bold;
+    color: #2a7ae2;
+}
+
+.model-task .field-completed {
+    text-align: center;
+}
+
+.list-filter {
+    background-color: #f0f4f8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.change-list {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+}
